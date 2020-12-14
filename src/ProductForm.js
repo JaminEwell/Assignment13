@@ -53,7 +53,7 @@ class ProductForm extends Component {
                 </p>
                 <p>
                     <label>In Stock (T or F)<br /> 
-                    <input type="text" class="form-control" name="price" onChange={this.handleChange} value={this.state.product.instock} /></label>
+                    <input type="text" class="form-control" name="instock" onChange={this.handleChange} value={this.state.product.instock} /></label>
                 </p>
                 <input type="submit" class="btn btn-info" value="Save" onClick={this.handleSave}></input>
             </form>
