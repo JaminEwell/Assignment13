@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Filters from './Filters'
 import ProductTable from './ProductTable'
 import ProductForm from './ProductForm'
+import $ from 'jquery'
 
 let PRODUCTS = {
     '1': {id: 1, category: 'Music', price: '$459.99', name: 'Clarinet'},
