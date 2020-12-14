@@ -10,6 +10,10 @@ class ProductTable extends Component {
     handleDestroy(id) {
         this.props.onDestroy(id)
     }
+
+    handleUpdateStatus = id => {
+        this.props.onUpdate(id)
+    }
     
     render () {
         let productsArray = Object.keys(this.props.products).map((pid) => this.props.products[pid])
@@ -23,7 +27,9 @@ class ProductTable extends Component {
                 <ProductRow 
                     product={product} 
                     key={product.id} 
-                    onDestroy={this.handleDestroy}></ProductRow>
+                    onDestroy={this.handleDestroy}
+                    updateStatus={this.handleUpdateStatus}></ProductRow>
+                    
             )
         })
 
@@ -35,6 +41,8 @@ class ProductTable extends Component {
                             <th>Name</th>
                             <th>Category</th>
                             <th>Price</th>
+                            <th>In Stock</th>
+                            <th>&nbsp;</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
