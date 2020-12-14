@@ -25,28 +25,60 @@ class Products extends Component {
         this.handleSave = this.handleSave.bind(this)
     }
 
-    handleFilter(filterInput) {
+    componentDidMount() {
+        this.getData()
+      }
+    
+      getData = () => {
+        fetch('http://localhost:3001/product/get/')
+          .then(res => res.json())
+          .then(
+            result => {
+              this.setState({
+                products: result
+              })
+            },
+            error => {
+              console.log('Fetch Error: ', error)
+            }
+          )
+      }
+    
+      handleFilter(filterInput) {
         this.setState(filterInput)
-    }
-
-    handleSave(product) {
+      }
+    
+      handleSave(product) {
         if (!product.id) {
-            product.id = new Date().getTime()
+          product.id = new Date().getTime()
         }
-        this.setState((prevState) => {
-            let products = prevState.products
-            products[product.id] = product
-            return { products }
+    
+        $.ajax({
+          type: 'POST',
+          url: 'http://localhost:3001/product/create/',
+          data: product
+        }).then(() => {
+          this.getData()
         })
-    }
-
-    handleDestroy(productId) {
-        this.setState((prevState) => {
-            let products = prevState.products
-            delete products[productId]
-            return { products }
-        });
-    }
+      }
+    
+      handleDestroy = productId => {
+        $.ajax({
+          type: 'DELETE',
+          url: `http://localhost:3001/product/delete/${productId}`
+        }).then(() => {
+          this.getData()
+        })
+      }
+    
+      handleUpdateStatus = productId => {
+        $.ajax({
+          type: 'PUT',
+          url: `http://localhost:3001/product/update/${productId}`
+        }).then(() => {
+          this.getData()
+        })
+      }
 
     render () {
         return (
@@ -57,7 +89,8 @@ class Products extends Component {
                 <ProductTable 
                     products={this.state.products}
                     filterText={this.state.filterText}
-                    onDestroy={this.handleDestroy}></ProductTable>
+                    onDestroy={this.handleDestroy}
+                    onUpdate={this.handleUpdateStatus}></ProductTable>
                 <ProductForm
                     onSave={this.handleSave}></ProductForm>
             </div>
