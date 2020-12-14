@@ -10,13 +10,19 @@ class ProductRow extends Component {
         this.props.onDestroy(this.props.product.id);
     }
 
+    updateStatus() {
+        this.props.updateStatus(this.props.product.id);
+    }
+
     render () {
         return (
             <tr>
                 <td>{this.props.product.name}</td>
                 <td>{this.props.product.category}</td>
                 <td>{this.props.product.price}</td>
-                <td class="text-right"><button onClick={this.destroy} class="btn btn-info">Delete</button></td>
+                <td>{String(this.props.product.instock)}</td>
+                <td class="text-right"><button onClick={this.updateStatus} class="btn btn-info">Update Status</button></td>
+                <td><button onClick={this.destroy} class="btn btn-info">Delete</button></td>
             </tr>
         )
     }
